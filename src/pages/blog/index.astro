@@ -2,20 +2,29 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import BlogRow from "../../components/BlogRow.astro";
+import EmptyState from "../../components/EmptyState.astro";
+import type { ComponentProps } from "astro/types";
 
-const posts = [
-  { date: "09.10.26", category: "WEB DEVELOPMENT", title: "Why I moved my personal website from WordPress to Astro", readingTime: "8 min" },
-  { date: "08.28.26", category: "DESIGN SYSTEM", title: "Dark, Type, Grid — building a quiet technical editorial site", readingTime: "6 min" },
-  { date: "08.14.26", category: "TOOLING", title: "NFS mount ordering: the _netdev + automount cycle that kills your network", readingTime: "10 min" },
-  { date: "07.30.26", category: "EXPERIMENT", title: "Image grading with a warm film recipe in ImageMagick", readingTime: "5 min" },
-];
+// Content slot — add posts here, newest first.
+const posts: ComponentProps<typeof BlogRow>[] = [];
 ---
 
 <BaseLayout title="Blog — DAKAI">
   <section class="section">
     <div class="container">
-      <SectionHeading index="02" label="WRITING" title="Notes on building." subtitle="Design, code and running a small studio. Newest first." />
-      <div>{posts.map((p) => <BlogRow {...p} href="#" />)}</div>
+      <SectionHeading
+        index="02"
+        label="WRITING"
+        title="Notes on building."
+        subtitle="Design, code and running a small studio. Newest first."
+      />
+      {
+        posts.length > 0 ? (
+          <div>{posts.map((p) => <BlogRow {...p} />)}</div>
+        ) : (
+          <EmptyState label="No articles published yet." />
+        )
+      }
     </div>
   </section>
 </BaseLayout>

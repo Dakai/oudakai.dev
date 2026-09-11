@@ -1,0 +1,17 @@
+---
+interface Props {
+  label?: string;
+}
+const { label = "Nothing here yet." } = Astro.props;
+---
+
+<p class="empty mono-label">{label}</p>
+
+<style>
+  .empty {
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding-block: 24px;
+  }
+</style>

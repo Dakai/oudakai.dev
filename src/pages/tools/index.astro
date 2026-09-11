@@ -2,26 +2,46 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import ToolCard from "../../components/ToolCard.astro";
+import EmptyState from "../../components/EmptyState.astro";
+import type { ComponentProps } from "astro/types";
 
-const tools = [
-  { index: "01", name: "Image Compressor", description: "Reduce image size without destroying quality. AVIF/WebP aware." },
-  { index: "02", name: "JSON Formatter", description: "Format, validate and inspect JSON — with shareable links." },
-  { index: "03", name: "Price Calculator", description: "Yanwen logistics pricing with zone lookup and Excel import." },
-  { index: "04", name: "Color Converter", description: "OKLCH / LAB / sRGB with gamut mapping." },
-];
+// Content slot — add tools here.
+const tools: ComponentProps<typeof ToolCard>[] = [];
 ---
 
 <BaseLayout title="Tools — DAKAI">
   <section class="section">
     <div class="container">
-      <SectionHeading index="03" label="TOOLS" title="Small useful things." subtitle="Single purpose, no accounts, no dashboards." />
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="tools-grid">
-        {tools.map((t) => <ToolCard {...t} href="#" />)}
-      </div>
+      <SectionHeading
+        index="03"
+        label="TOOLS"
+        title="Small useful things."
+        subtitle="Single purpose, no accounts, no dashboards."
+      />
+      {
+        tools.length > 0 ? (
+          <div class="tools-grid">{tools.map((t) => <ToolCard {...t} />)}</div>
+        ) : (
+          <EmptyState label="No tools published yet." />
+        )
+      }
     </div>
   </section>
   <style>
-    @media (max-width: 900px) { .tools-grid { grid-template-columns: 1fr 1fr !important; } }
-    @media (max-width: 560px) { .tools-grid { grid-template-columns: 1fr !important; } }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap);
+    }
+    @media (max-width: 900px) {
+      .tools-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 560px) {
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </BaseLayout>
