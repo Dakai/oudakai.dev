@@ -1,0 +1,22 @@
+# Response headers for the Workers Static Assets bundle.
+# Limits: 100 rules, 2,000 characters per line. All matching rules apply.
+# Ported from scripts/run-server.mjs, which this static deploy replaces.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# /cobuild is an unindexed demo. Both mechanisms are applied because they fail
+# independently: the header covers every response (including non-HTML), the
+# <meta name="robots"> in cobuild's layout covers crawlers that ignore headers.
+#
+# Deliberately NOT paired with "Disallow: /cobuild/" in robots.txt — a crawler
+# blocked by robots.txt never fetches the page, so it never sees this noindex
+# and the URL can still be indexed (without content). Allowing the crawl is what
+# makes the removal stick.
+/cobuild/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet

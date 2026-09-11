@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:all": "bash scripts/build-all.sh",
     "preview": "astro preview",
     "check": "astro check",
+    "deploy": "wrangler deploy",
     "docker:build": "bash scripts/build-and-push.sh",
     "docker:deploy": "bash scripts/redeploy.sh",
     "docker:ship": "bun run docker:build && bun run docker:deploy"
@@ -16,6 +18,7 @@
     "astro": "^5.7.0"
   },
   "devDependencies": {
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "wrangler": "^4.131.1"
   }
 }
