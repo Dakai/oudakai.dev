@@ -1,5 +1,5 @@
 {
-  "name": "darkodev",
+  "name": "oudakai.dev",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -7,7 +7,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "docker:build": "bash scripts/build-and-push.sh",
+    "docker:deploy": "bash scripts/redeploy.sh",
+    "docker:ship": "bun run docker:build && bun run docker:deploy"
   },
   "dependencies": {
     "astro": "^5.7.0"
