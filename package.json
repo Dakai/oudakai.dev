@@ -8,11 +8,9 @@
     "build": "astro build",
     "build:all": "bash scripts/build-all.sh",
     "preview": "astro preview",
+    "serve": "node scripts/run-server.mjs",
     "check": "astro check",
-    "deploy": "wrangler deploy",
-    "docker:build": "bash scripts/build-and-push.sh",
-    "docker:deploy": "bash scripts/redeploy.sh",
-    "docker:ship": "bun run docker:build && bun run docker:deploy"
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "astro": "^5.7.0"

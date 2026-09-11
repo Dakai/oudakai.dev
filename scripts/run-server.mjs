@@ -1,5 +1,7 @@
-// Minimal static server for the Astro build output.
-// Same shape as sdison-astro's scripts/run-server.mjs: security headers + immutable asset caching.
+// Local preview server for a built dist/, emulating the deployed Worker's
+// behaviour so `_headers` and 404-page handling can be checked before pushing:
+// same security headers, /_astro immutable caching, and 404 fallback.
+//   bun run build:all && bun run serve
 import http from "node:http";
 import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";

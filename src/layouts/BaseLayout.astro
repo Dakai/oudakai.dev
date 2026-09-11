@@ -21,6 +21,7 @@ const pathname = Astro.url.pathname;
     <meta name="description" content={description} />
     <meta name="color-scheme" content="dark" />
     <title>{title}</title>
+    <link rel="canonical" href={new URL(pathname, Astro.site ?? Astro.url.origin)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
