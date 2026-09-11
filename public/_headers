@@ -10,6 +10,17 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
 
+# Astro emits content-hashed filenames here, so they can never change in place.
+# Deliberately scoped to /_astro only — files in public/ are NOT hashed, and
+# caching those immutably would strand stale copies in browsers forever.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Same reasoning for the sub-site's hashed assets. A leading `*` is not valid in
+# an _headers path pattern, so each mount point needs its own rule.
+/cobuild/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # /cobuild is an unindexed demo. Both mechanisms are applied because they fail
 # independently: the header covers every response (including non-HTML), the
 # <meta name="robots"> in cobuild's layout covers crawlers that ignore headers.
