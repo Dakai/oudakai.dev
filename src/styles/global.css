@@ -1,0 +1,168 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap");
+
+:root {
+  /* — palette — */
+  --ink: #080808;
+  --surface: #111111;
+  --surface-2: #181818;
+  --border: #252525;
+  --border-subtle: #1b1b1b;
+  --border-hover: #444444;
+
+  --text-primary: #f2f2f0;
+  --text-secondary: #a0a09b;
+  --text-muted: #666661;
+  --text-disabled: #454542;
+
+  --accent: #4f7cff;
+  --accent-strong: #3d5bff;
+
+  /* — typography — */
+  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "Cascadia Code", monospace;
+
+  /* — type scale — */
+  --text-display-xl: 96px;
+  --text-display: 72px;
+  --text-h1: 56px;
+  --text-h2: 40px;
+  --text-h3: 28px;
+  --text-body-lg: 20px;
+  --text-body: 16px;
+  --text-small: 14px;
+  --text-mono: 12px;
+
+  /* — layout — */
+  --max-width: 1440px;
+  --gutter: 32px;
+  --gap: 16px;
+  --nav-h: 72px;
+
+  /* — radius — */
+  --radius-pill: 999px;
+  --radius-card: 0px;
+  --radius-img: 0px;
+
+  /* — motion — */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 200ms;
+  --dur-med: 400ms;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--ink);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  scrollbar-gutter: stable;
+}
+
+body {
+  background: var(--ink);
+  min-height: 100dvh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+/* — grid container — */
+.container {
+  width: min(calc(100% - var(--gutter) * 2), var(--max-width));
+  margin-inline: auto;
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gap);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --gutter: 20px;
+    --gap: 12px;
+    --text-display-xl: 48px;
+    --text-display: 44px;
+    --text-h1: 32px;
+    --text-h2: 28px;
+  }
+  .grid-12 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* — mono label — */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* — section spacing — */
+.section {
+  padding-block: clamp(80px, 10vw, 160px);
+}
+.section--tight {
+  padding-block: clamp(64px, 8vw, 128px);
+}
+
+/* — hairline — */
+.hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+.hr--subtle {
+  border-color: var(--border-subtle);
+}
+
+/* — focus — */
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* — motion — */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* — scrollbar — */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}

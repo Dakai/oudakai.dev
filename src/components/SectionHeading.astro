@@ -1,0 +1,35 @@
+---
+interface Props {
+  index: string; // "01"
+  label: string; // "SELECTED PROJECTS"
+  title?: string;
+  subtitle?: string;
+}
+const { index, label, title, subtitle } = Astro.props;
+---
+
+<div class="section-head">
+  <p class="mono-label section-head__eyebrow">{index} / {label}</p>
+  {title && <h2 class="section-head__title">{title}</h2>}
+  {subtitle && <p class="section-head__sub">{subtitle}</p>}
+</div>
+
+<style>
+  .section-head { margin-bottom: 40px; }
+  .section-head__eyebrow { margin-bottom: 16px; }
+  .section-head__title {
+    font-size: var(--text-h2);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+  .section-head__sub {
+    margin-top: 12px;
+    font-size: var(--text-body);
+    color: var(--text-secondary);
+    max-width: 36ch;
+    line-height: 1.6;
+  }
+</style>

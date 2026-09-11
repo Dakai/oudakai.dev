@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+
+const projects = [
+  { index: "01", category: "CLIENT WORK", title: "A better way to move goods", description: "E-commerce & brand site for a modern logistics group.", stack: ["ASTRO","SVELTE","TYPESCRIPT"] },
+  { index: "02", category: "INTERNAL TOOL", title: "Yanwen price calculator", description: "Shipping cost engine with live Excel ingestion.", stack: ["GO","REACT","POSTGRES"] },
+  { index: "03", category: "EXPERIMENT", title: "Image pipeline for the web", description: "AVIF → cropped, graded WebP with ImageMagick.", stack: ["ASTRO","SHARP","MDX"] },
+  { index: "04", category: "CLIENT WORK", title: "Studio portfolio", description: "Dark editorial portfolio for a design practice.", stack: ["ASTRO","TYPESCRIPT"] },
+];
+---
+
+<BaseLayout title="Projects — DAKAI">
+  <section class="section">
+    <div class="container">
+      <SectionHeading index="01" label="PROJECTS" title="Things I've built for clients and for myself." subtitle="Filtered by type. Each case study includes process and decisions." />
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="proj-grid">
+        {projects.map((p) => <ProjectCard {...p} href="#" />)}
+      </div>
+    </div>
+  </section>
+  <style>
+    @media (max-width: 900px) { .proj-grid { grid-template-columns: 1fr 1fr !important; } }
+    @media (max-width: 560px) { .proj-grid { grid-template-columns: 1fr !important; } }
+  </style>
+</BaseLayout>

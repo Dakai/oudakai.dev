@@ -1,0 +1,54 @@
+---
+interface Props {
+  date: string;
+  category: string;
+  title: string;
+  readingTime?: string;
+  href?: string;
+}
+const { date, category, title, readingTime, href = "#" } = Astro.props;
+---
+
+<a href={href} class="b-row">
+  <span class="b-row__date mono-label">{date}</span>
+  <span class="b-row__cat mono-label">{category}</span>
+  <span class="b-row__title">{title}</span>
+  <span class="b-row__meta mono-label">{readingTime ? `${readingTime}` : ""} →</span>
+</a>
+
+<style>
+  .b-row {
+    display: grid;
+    grid-template-columns: 88px 160px 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .b-row:last-child { border-bottom: 1px solid var(--border); }
+  .b-row:hover { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+  .b-row:hover .b-row__title { color: var(--accent); }
+
+  .b-row__date { color: var(--text-muted); font-size: 12px; }
+  .b-row__cat { color: var(--text-secondary); font-size: 11px; }
+  .b-row__title {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .b-row__meta { color: var(--text-muted); font-size: 11px; white-space: nowrap; }
+
+  @media (max-width: 760px) {
+    .b-row {
+      grid-template-columns: 1fr auto;
+      gap: 6px 12px;
+      padding: 16px 0;
+    }
+    .b-row__title { grid-column: 1 / -1; order: 3; font-size: 16px; }
+    .b-row__cat { text-align: right; }
+  }
+</style>

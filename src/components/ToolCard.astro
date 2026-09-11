@@ -1,0 +1,66 @@
+---
+interface Props {
+  index: string;
+  name: string;
+  description: string;
+  href?: string;
+  status?: string;
+}
+const { index, name, description, href = "#", status = "READY" } = Astro.props;
+---
+
+<a href={href} class="t-card">
+  <div class="t-card__head">
+    <span class="mono-label t-card__index">{index}</span>
+    <span class="mono-label t-card__status"><span class="t-card__dot">●</span> {status}</span>
+  </div>
+  <h3 class="t-card__name">{name}</h3>
+  <p class="t-card__desc">{description}</p>
+  <span class="t-card__cta mono-label">Open tool →</span>
+</a>
+
+<style>
+  .t-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+  .t-card:hover { border-color: #444; }
+  .t-card:hover .t-card__cta { color: var(--accent); }
+
+  .t-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .t-card__index { font-size: 11px; color: var(--text-muted); }
+  .t-card__status { font-size: 10px; color: var(--text-muted); display: inline-flex; gap: 6px; align-items: center; }
+  .t-card__dot { color: var(--accent); font-size: 7px; }
+  .t-card__name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+  }
+  .t-card__desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    flex: 1;
+  }
+  .t-card__cta {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 12px;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+</style>

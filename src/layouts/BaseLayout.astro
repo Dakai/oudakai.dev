@@ -1,0 +1,298 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "DAKAI — Independent Digital Studio",
+  description = "Websites, tools and experiments. Building digital things with precision.",
+} = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="container nav__inner">
+        <a href="/" class="nav__logo" aria-label="Home">DAKAI</a>
+
+        <nav class="nav__links" aria-label="Primary">
+          <a href="/projects" class:list={["nav__link", pathname.startsWith("/projects") && "is-active"]} data-label="Projects">
+            <span class="nav__dot" aria-hidden="true"></span>Projects
+          </a>
+          <a href="/blog" class:list={["nav__link", pathname.startsWith("/blog") && "is-active"]} data-label="Blog">
+            <span class="nav__dot" aria-hidden="true"></span>Blog
+          </a>
+          <a href="/tools" class:list={["nav__link", pathname.startsWith("/tools") && "is-active"]} data-label="Tools">
+            <span class="nav__dot" aria-hidden="true"></span>Tools
+          </a>
+          <a href="/about" class:list={["nav__link", pathname.startsWith("/about") && "is-active"]} data-label="About">
+            <span class="nav__dot" aria-hidden="true"></span>About
+          </a>
+        </nav>
+
+        <div class="nav__meta">
+          <a href="/style-guide" class="nav__sys mono-label">SYS / 001</a>
+          <span class="nav__lang mono-label">EN / 中</span>
+        </div>
+
+        <button class="nav__toggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
+
+      <!-- mobile drawer -->
+      <div class="nav__drawer" id="nav-drawer" hidden>
+        <a href="/projects">Projects</a>
+        <a href="/blog">Blog</a>
+        <a href="/tools">Tools</a>
+        <a href="/about">About</a>
+        <a href="/style-guide" class="mono-label">Style Guide — SYS / 001</a>
+      </div>
+    </header>
+
+    <main><slot /></main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__cta">
+          <p class="footer__headline">
+            LET'S BUILD<br />
+            SOMETHING<br />
+            <span>USEFUL.</span>
+          </p>
+          <a href="mailto:hello@oudakai.dev" class="btn btn--primary">Discuss a project →</a>
+        </div>
+
+        <hr class="hr" />
+
+        <div class="footer__grid">
+          <div>
+            <p class="mono-label" style="color:var(--text-primary);margin-bottom:12px">DAKAI OU</p>
+            <p style="color:var(--text-muted);font-size:14px;line-height:1.6">Independent digital studio.<br />Websites, tools &amp; experiments.</p>
+          </div>
+          <nav aria-label="Footer primary">
+            <p class="mono-label" style="margin-bottom:12px">Navigate</p>
+            <ul>
+              <li><a href="/projects">Projects</a></li>
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/tools">Tools</a></li>
+              <li><a href="/about">About</a></li>
+            </ul>
+          </nav>
+          <nav aria-label="Footer social">
+            <p class="mono-label" style="margin-bottom:12px">Connect</p>
+            <ul>
+              <li><a href="https://github.com/dakai" target="_blank" rel="noreferrer">GitHub ↗</a></li>
+              <li><a href="mailto:hello@oudakai.dev">hello@oudakai.dev ↗</a></li>
+            </ul>
+          </nav>
+          <div class="footer__meta">
+            <p class="mono-label">© 2026 — INK / SIGNAL</p>
+            <p class="mono-label" style="color:var(--text-muted)">Guangzhou, China</p>
+            <p class="mono-label" style="margin-top:8px">EN / 中文</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const btn = document.querySelector(".nav__toggle");
+      const drawer = document.getElementById("nav-drawer");
+      btn?.addEventListener("click", () => {
+        const open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!open));
+        if (drawer) drawer.hidden = open;
+        btn.classList.toggle("is-open", !open);
+      });
+    </script>
+
+    <style>
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        height: var(--nav-h);
+        background: color-mix(in srgb, var(--ink) 92%, transparent);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .nav__inner {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+      .nav__logo {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        color: var(--text-primary);
+        white-space: nowrap;
+      }
+      .nav__links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        margin-left: auto;
+      }
+      .nav__link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--text-secondary);
+        transition: color var(--dur-fast) var(--ease-out);
+        padding-block: 4px;
+      }
+      .nav__link:hover { color: var(--text-primary); }
+      .nav__dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all var(--dur-fast) var(--ease-out);
+      }
+      .nav__link.is-active { color: var(--text-primary); }
+      .nav__link.is-active .nav__dot { opacity: 1; transform: scale(1); }
+
+      .nav__meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border-left: 1px solid var(--border-subtle);
+        padding-left: 16px;
+        margin-left: 8px;
+      }
+      .nav__sys { font-size: 11px; }
+      .nav__lang { font-size: 11px; color: var(--text-muted); }
+
+      .nav__toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: 0;
+        cursor: pointer;
+        padding: 8px;
+      }
+      .nav__toggle span {
+        display: block;
+        width: 18px;
+        height: 1.5px;
+        background: var(--text-primary);
+        transition: transform var(--dur-fast) var(--ease-out);
+      }
+      .nav__toggle.is-open span:first-child { transform: translateY(3.5px) rotate(45deg); }
+      .nav__toggle.is-open span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+
+      .nav__drawer {
+        position: absolute;
+        inset: var(--nav-h) 0 auto 0;
+        background: var(--ink);
+        border-bottom: 1px solid var(--border);
+        padding: 24px 20px 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .nav__drawer[hidden] { display: none !important; }
+      .nav__drawer a { font-size: 18px; color: var(--text-primary); }
+      .nav__drawer a.mono-label { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+
+      /* footer */
+      .footer {
+        border-top: 1px solid var(--border-subtle);
+        padding-block: clamp(64px, 8vw, 96px) 40px;
+      }
+      .footer__cta {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 32px;
+        flex-wrap: wrap;
+        padding-bottom: 48px;
+      }
+      .footer__headline {
+        font-size: clamp(40px, 6vw, 72px);
+        font-weight: 500;
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+      }
+      .footer__headline span { color: var(--text-muted); }
+
+      .footer__grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+        gap: 32px;
+        padding-top: 32px;
+      }
+      .footer__grid ul { list-style: none; display: grid; gap: 8px; }
+      .footer__grid ul a {
+        font-size: 14px;
+        color: var(--text-secondary);
+        transition: color var(--dur-fast) var(--ease-out);
+      }
+      .footer__grid ul a:hover { color: var(--accent); }
+      .footer__meta { text-align: right; }
+
+      /* buttons — shared so footer CTA works without component */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 48px;
+        padding: 0 20px;
+        border-radius: var(--radius-pill);
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+        transition: all var(--dur-fast) var(--ease-out);
+        cursor: pointer;
+        border: 1px solid transparent;
+        text-decoration: none;
+      }
+      .btn--primary {
+        background: var(--text-primary);
+        color: var(--ink);
+        border-color: var(--text-primary);
+      }
+      .btn--primary:hover { background: var(--accent); border-color: var(--accent); }
+      .btn--secondary {
+        background: transparent;
+        color: var(--text-primary);
+        border-color: #383838;
+      }
+      .btn--secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+      @media (max-width: 900px) {
+        .nav__links, .nav__meta { display: none; }
+        .nav__toggle { display: flex; }
+        .footer__grid { grid-template-columns: 1fr 1fr; }
+        .footer__meta { text-align: left; }
+      }
+      @media (max-width: 520px) {
+        .footer__grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </body>
+</html>

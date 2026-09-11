@@ -1,0 +1,164 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import BlogRow from "../components/BlogRow.astro";
+import ToolCard from "../components/ToolCard.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+---
+
+<BaseLayout title="Style Guide — DAKAI">
+  <div class="container" style="padding-block:48px 24px">
+    <p class="mono-label">00 / STYLE GUIDE — VISUAL SOURCE OF TRUTH</p>
+    <h1 style="font-size:var(--text-display);line-height:.95;letter-spacing:-.045em;margin-top:12px">Dark<br/>Type<br/>Grid.</h1>
+    <p style="color:var(--text-secondary);margin-top:16px;max-width:40ch">This page is the reference for every future change. If a component is not here, it does not exist yet.</p>
+  </div>
+
+  <hr class="hr" />
+
+  <!-- colors -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="01" label="COLOR" title="Ink first. Signal sparingly." />
+      <div class="swatches">
+        <div class="sw"><i style="background:#080808;border:1px solid #252525"></i><span class="mono-label">INK — #080808</span></div>
+        <div class="sw"><i style="background:#111111"></i><span class="mono-label">SURFACE — #111111</span></div>
+        <div class="sw"><i style="background:#181818"></i><span class="mono-label">SURFACE-2 — #181818</span></div>
+        <div class="sw"><i style="background:#252525"></i><span class="mono-label">BORDER — #252525</span></div>
+        <div class="sw"><i style="background:#1B1B1B"></i><span class="mono-label">BORDER-SUBTLE — #1B1B1B</span></div>
+        <div class="sw"><i style="background:#4F7CFF"></i><span class="mono-label" style="color:#fff">SIGNAL — #4F7CFF</span></div>
+        <div class="sw"><i style="background:#F2F2F0"></i><span class="mono-label" style="color:var(--ink)">TEXT-PRIMARY — #F2F2F0</span></div>
+        <div class="sw"><i style="background:#A0A09B"></i><span class="mono-label">TEXT-SECONDARY — #A0A09B</span></div>
+      </div>
+      <p class="mono-label" style="margin-top:16px;color:var(--text-muted)">Ratio — Black 82% · White/Grey 15% · Accent 3%</p>
+    </div>
+  </section>
+
+  <hr class="hr hr--subtle" />
+
+  <!-- typography -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="02" label="TYPOGRAPHY" title="Geist · Geist Mono" subtitle="Headings 500 · Body 400 · Mono for metadata, numbers, labels." />
+      <div class="type-samples">
+        <div class="type-row"><span class="mono-label">Display XL — 96 / 0.92 / -0.055em / 500</span><p style="font-size:var(--text-display-xl);line-height:.92;letter-spacing:-.055em;font-weight:500">BUILDING DIGITAL THINGS.</p></div>
+        <div class="type-row"><span class="mono-label">Display — 72 / 0.95 / -0.045em / 500</span><p style="font-size:var(--text-display);line-height:.95;letter-spacing:-.045em;font-weight:500">A better way to move goods.</p></div>
+        <div class="type-row"><span class="mono-label">H1 — 56 / 1 / -0.035em</span><p style="font-size:var(--text-h1);line-height:1;letter-spacing:-.035em;font-weight:500">Project title goes here</p></div>
+        <div class="type-row"><span class="mono-label">H2 — 40 / 1.05 / -0.025em</span><p style="font-size:var(--text-h2);line-height:1.05;letter-spacing:-.025em;font-weight:500">Section heading</p></div>
+        <div class="type-row"><span class="mono-label">Body Large — 20 / 1.5</span><p style="font-size:var(--text-body-lg);line-height:1.5;color:var(--text-secondary)">Websites, tools and experiments. A quiet technical editorial voice.</p></div>
+        <div class="type-row"><span class="mono-label">Body — 16 / 1.6</span><p style="font-size:var(--text-body);line-height:1.6;color:var(--text-secondary)">Body copy at 16px. Generous whitespace, no decoration without purpose.</p></div>
+        <div class="type-row"><span class="mono-label">Mono — 12 / 1.4 / 0.02em</span><p style="font-family:var(--font-mono);font-size:var(--text-mono);line-height:1.4;letter-spacing:.02em;color:var(--text-muted)">01 / PROJECT — 2026.09.10 — ASTRO · SVELTE · TYPESCRIPT</p></div>
+      </div>
+
+      <div class="hierarchy-demo" style="margin-top:40px;border:1px solid var(--border);padding:32px;background:var(--surface)">
+        <p class="mono-label">01 / PROJECT</p>
+        <p style="font-size:clamp(32px,6vw,56px);font-weight:500;letter-spacing:-.035em;line-height:.95;margin-top:12px">A BETTER WAY<br/>TO MOVE GOODS.</p>
+        <p style="color:var(--text-secondary);margin-top:12px">Web design · Development · E-commerce</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr hr--subtle" />
+
+  <!-- buttons -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="03" label="BUTTONS" title="Pill primary. Outline secondary." />
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#" class="btn btn--primary">Discuss a project →</a>
+        <a href="#" class="btn btn--secondary">Read blog</a>
+        <a href="#" class="btn btn--secondary" style="opacity:.5;pointer-events:none">Disabled</a>
+      </div>
+      <p class="mono-label" style="margin-top:12px;color:var(--text-muted)">Primary: #F2F2F0 → hover #4F7CFF · Secondary: transparent / #383838 → hover #4F7CFF · Height 48px · Radius 999px</p>
+    </div>
+  </section>
+
+  <hr class="hr hr--subtle" />
+
+  <!-- grid -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="04" label="GRID" title="12-col desktop · 4-col mobile" subtitle="Max 1440px · Gutter 32px (20px mobile) · Gap 16px (12px mobile)." />
+      <div class="grid-12" style="margin-top:8px">
+        {Array.from({ length: 12 }).map(() => <div style="height:48px;background:var(--surface);border:1px solid var(--border)"></div>)}
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr hr--subtle" />
+
+  <!-- cards -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="05" label="CARDS" title="Surface #111 · Border #252525 · Hover #444" subtitle="No shadow, no gradient, no glass. Image 16/10, scale 1.02 on hover, 250–400ms ease-out." />
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="sg-cards">
+        <ProjectCard index="01" category="CLIENT WORK" title="A better way to move goods" description="E-commerce & brand site for a modern logistics group." stack={["ASTRO","SVELTE","TYPESCRIPT"]} href="#" />
+        <ProjectCard index="02" category="EXPERIMENT" title="Signal & silence" description="A minimal publishing experiment." stack={["ASTRO","MDX"]} href="#" />
+        <ProjectCard index="03" category="INTERNAL" title="Price engine" description="Live Excel ingestion and zone lookup." stack={["GO","POSTGRES"]} href="#" />
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr hr--subtle" />
+
+  <!-- blog rows -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="06" label="BLOG ROWS" title="Editorial list, not cards." subtitle="Border-top hairline · Mono date + category · 17px title. Hover: title → accent." />
+      <div>
+        <BlogRow date="09.10.26" category="WEB DEVELOPMENT" title="Why I moved my personal website from WordPress to Astro" readingTime="8 min" href="#" />
+        <BlogRow date="08.28.26" category="DESIGN SYSTEM" title="Dark, Type, Grid — building a quiet technical editorial site" readingTime="6 min" href="#" />
+        <BlogRow date="08.14.26" category="TOOLING" title="NFS mount ordering: the _netdev + automount cycle" readingTime="10 min" href="#" />
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr hr--subtle" />
+
+  <!-- tools -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="07" label="TOOLS" title="Mono · index · status dot" subtitle="Technical but not a dashboard. One purpose per card." />
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="sg-tools">
+        <ToolCard index="01" name="Image Compressor" description="Reduce image size without destroying quality." href="#" />
+        <ToolCard index="02" name="JSON Formatter" description="Format, validate and inspect JSON." href="#" />
+        <ToolCard index="03" name="Price Calculator" description="Yanwen logistics pricing with zone lookup." href="#" />
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr hr--subtle" />
+
+  <!-- experimental -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="08" label="EXPERIMENTAL" title="≤ 5–10% of the page." subtitle="Grid dots · coordinates · system labels · tiny ● indicator in #4F7CFF. Opacity low, never dominant." />
+      <div style="display:flex;gap:24px;flex-wrap:wrap" class="mono-label">
+        <span>SYSTEM / 001</span><span>BUILD / 2026</span><span>STATUS / ACTIVE</span><span style="color:var(--accent)">● ONLINE</span>
+      </div>
+      <div style="margin-top:16px;height:80px;border:1px solid var(--border);background:radial-gradient(circle, var(--text-primary) 1px, transparent 1px);background-size:20px 20px;opacity:.06"></div>
+    </div>
+  </section>
+
+  <hr class="hr" />
+  <div class="container" style="padding-block:24px">
+    <p class="mono-label" style="color:var(--text-muted)">V1 — Dark only · No light mode yet · Spacing 4px base (4 8 12 16 24 32 48 64 80 96 128 160 192) · Motion 200–700ms ease-out · Radius sharp (cards 0–4px, buttons 999px)</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .swatches { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:8px; }
+  .sw { display:grid; gap:8px; }
+  .sw i { display:block; height:64px; border-radius:2px; }
+  .type-samples { display:grid; gap:28px; margin-top:8px; }
+  .type-row { display:grid; gap:6px; padding-bottom:20px; border-bottom:1px solid var(--border-subtle); }
+  .type-row:last-child { border:0; }
+  .btn { display:inline-flex;align-items:center;height:48px;padding:0 20px;border-radius:999px;font-size:14px;font-weight:500;border:1px solid transparent;transition:all 200ms cubic-bezier(.16,1,.3,1); }
+  .btn--primary { background:var(--text-primary); color:var(--ink); }
+  .btn--primary:hover { background:var(--accent); border-color:var(--accent); }
+  .btn--secondary { background:transparent; color:var(--text-primary); border-color:#383838; }
+  .btn--secondary:hover { border-color:var(--accent); color:var(--accent); }
+  @media (max-width: 700px) {
+    .swatches { grid-template-columns:repeat(2,1fr); }
+    .sg-cards, .sg-tools { grid-template-columns:1fr !important; }
+  }
+</style>

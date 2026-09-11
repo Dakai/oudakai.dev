@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import BlogRow from "../components/BlogRow.astro";
+import ToolCard from "../components/ToolCard.astro";
+
+const projects = [
+  { index: "01", category: "CLIENT WORK", title: "A better way to move goods", description: "E-commerce & brand site for a modern logistics group.", stack: ["ASTRO", "SVELTE", "TYPESCRIPT"], href: "/projects" },
+  { index: "02", category: "INTERNAL TOOL", title: "Yanwen price calculator", description: "Shipping cost engine with live Excel ingestion.", stack: ["GO", "REACT", "POSTGRES"], href: "/projects" },
+  { index: "03", category: "EXPERIMENT", title: "Image pipeline for the web", description: "AVIF → cropped, graded WebP with ImageMagick.", stack: ["ASTRO", "SHARP", "MDX"], href: "/projects" },
+];
+
+const posts = [
+  { date: "09.10.26", category: "WEB DEVELOPMENT", title: "Why I moved my personal website from WordPress to Astro", readingTime: "8 min", href: "/blog" },
+  { date: "08.28.26", category: "DESIGN SYSTEM", title: "Dark, Type, Grid — building a quiet technical editorial site", readingTime: "6 min", href: "/blog" },
+  { date: "08.14.26", category: "TOOLING", title: "NFS mount ordering: the _netdev + automount cycle that kills your network", readingTime: "10 min", href: "/blog" },
+];
+
+const tools = [
+  { index: "01", name: "Image Compressor", description: "Reduce image size without destroying quality. AVIF/WebP aware.", href: "/tools" },
+  { index: "02", name: "JSON Formatter", description: "Format, validate and inspect JSON — with shareable links.", href: "/tools" },
+  { index: "03", name: "Price Calculator", description: "Yanwen logistics pricing with zone lookup and Excel import.", href: "/tools" },
+];
+---
+
+<BaseLayout title="DAKAI — Independent Digital Studio">
+  <Hero />
+
+  <!-- 01 / PROJECTS -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading index="01" label="SELECTED PROJECTS" title="Things I've built for clients and for myself." subtitle="Each project is documented with process, decisions and trade-offs — not just the outcome." />
+      <div class="proj-grid">
+        {projects.map((p) => <ProjectCard {...p} />)}
+      </div>
+      <div style="margin-top:28px">
+        <a href="/projects" class="link-arrow mono-label">View all projects →</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr hr--subtle" />
+
+  <!-- 02 / WRITING -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="02" label="WRITING" title="Notes on building." subtitle="Longer form writing on design, code and running a small studio." />
+      <div class="blog-list">
+        {posts.map((p) => <BlogRow {...p} />)}
+      </div>
+      <div style="margin-top:24px">
+        <a href="/blog" class="link-arrow mono-label">All articles →</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr hr--subtle" />
+
+  <!-- 03 / TOOLS -->
+  <section class="section section--tight">
+    <div class="container">
+      <SectionHeading index="03" label="TOOLS" title="Small useful things." subtitle="Focused single-purpose tools. No dashboards, no accounts." />
+      <div class="tools-grid">
+        {tools.map((t) => <ToolCard {...t} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- signal strip -->
+  <div class="signal-strip mono-label">
+    <div class="container signal-strip__inner">
+      <span>DARK · TYPE · GRID · MONO · SPACE · SIGNAL · MOTION</span>
+      <span>INK #080808 — SURFACE #111111 — SIGNAL #B7FF5A</span>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+  }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+  }
+  .blog-list { margin-top: 8px; }
+  .link-arrow {
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .link-arrow:hover { color: var(--accent); }
+
+  .signal-strip {
+    border-block: 1px solid var(--border-subtle);
+    padding-block: 12px;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+  .signal-strip__inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .proj-grid, .tools-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .proj-grid, .tools-grid { grid-template-columns: 1fr; }
+  }
+</style>

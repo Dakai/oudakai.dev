@@ -1,0 +1,100 @@
+---
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    <p class="mono-label hero__kicker">INDEPENDENT DIGITAL STUDIO — EST. 2026</p>
+
+    <h1 class="hero__title">
+      <span>BUILDING</span>
+      <span>DIGITAL</span>
+      <span class="hero__accent">THINGS.</span>
+    </h1>
+
+    <div class="hero__bottom">
+      <p class="hero__desc">Websites, tools and experiments.<br />Precise, quiet and technical.</p>
+      <div class="hero__actions">
+        <a href="/projects" class="btn btn--primary">View projects →</a>
+        <a href="/blog" class="btn btn--secondary">Read blog</a>
+      </div>
+      <p class="mono-label hero__meta">2026 / 001 — SYSTEM / ACTIVE <span class="hero__dot">●</span> ONLINE</p>
+    </div>
+  </div>
+
+  <!-- experimental grid dots — ≤5% visual weight -->
+  <div class="hero__grid" aria-hidden="true"></div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: clip;
+    padding-block: 56px 48px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .hero__kicker { margin-bottom: 32px; }
+  .hero__title {
+    font-size: clamp(44px, 10vw, 96px);
+    font-weight: 500;
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero__accent { color: var(--text-muted); }
+
+  .hero__bottom {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+  }
+  .hero__desc {
+    font-size: var(--text-body-lg);
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+  .hero__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero__meta {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 16px;
+    margin-top: 8px;
+  }
+  .hero__dot { color: var(--accent); font-size: 8px; }
+
+  .hero__grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: radial-gradient(circle, var(--text-primary) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 70% 50% at 80% 20%, black 40%, transparent 75%);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 20px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all var(--dur-fast) var(--ease-out);
+    border: 1px solid transparent;
+  }
+  .btn--primary { background: var(--text-primary); color: var(--ink); }
+  .btn--primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn--secondary { border-color: #383838; color: var(--text-primary); }
+  .btn--secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 700px) {
+    .hero__bottom { grid-template-columns: 1fr; }
+  }
+</style>
