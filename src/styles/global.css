@@ -1,21 +1,72 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap");
 
-:root {
-  /* — palette — */
-  --ink: #080808;
-  --surface: #111111;
-  --surface-2: #181818;
-  --border: #252525;
-  --border-subtle: #1b1b1b;
-  --border-hover: #444444;
+/* ============================================================================
+   DAKAI — design tokens
 
-  --text-primary: #f2f2f0;
-  --text-secondary: #a0a09b;
-  --text-muted: #666661;
-  --text-disabled: #454542;
+   Dark is the default identity. Light is opt-in with <html data-theme="light">
+   and previewed side by side on /style-guide.
 
-  --accent: #4f7cff;
-  --accent-strong: #3d5bff;
+   Every value below is a ROLE, never a raw colour. Components reference tokens
+   only — a hex literal inside a component is a bug.
+
+   Rules that hold in both themes:
+   · Elevation is carried by surface + border in dark, by surface + shadow in
+     light. Do not add a shadow to a dark card; do not rely on a border alone
+     for a light card.
+   · Body text (--text-primary/-secondary/-muted) clears 4.5:1 on every surface
+     in the ladder. --text-disabled is the one exemption (WCAG 1.4.3).
+   · 1px alpha hairlines are the default border. Never `border: 1px solid #hex`.
+   ============================================================================ */
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  accent-color: var(--accent);
+
+  /* — surfaces — elevation ladder: bg < sunken < surface < raised — */
+  --bg: #0a0a0c;                     /* canvas */
+  --surface-sunken: #101012;         /* inset wells, media beds, code blocks */
+  --surface: #18181b;                /* cards */
+  --surface-raised: #232326;         /* drawers, menus, popovers, modals */
+  --surface-hover: rgba(255, 255, 255, 0.04); /* row / card hover wash */
+
+  /* — hairlines — */
+  --border-subtle: rgba(255, 255, 255, 0.05); /* separators inside a surface */
+  --border: rgba(255, 255, 255, 0.08);        /* default container edge */
+  --border-hover: rgba(255, 255, 255, 0.16);  /* interactive edge, hovered */
+  --border-strong: rgba(255, 255, 255, 0.24); /* outline buttons, scrollbar */
+
+  /* — text — */
+  --text-primary: #f4f4f5;           /* headings, body, active nav */
+  --text-secondary: #a1a1aa;         /* supporting copy, mono labels */
+  --text-muted: #8b8b94;             /* metadata, dates, captions */
+  --text-disabled: #52525b;          /* disabled controls only */
+
+  /* — inverse fill — flips with the theme; never hardcode a white button — */
+  --inverse-bg: #f4f4f5;
+  --inverse-fg: #0a0a0c;
+
+  /* — accent — */
+  --accent: #5b86ff;
+  --accent-hover: #7d9bff;           /* brightens on dark */
+  --accent-subtle: rgba(91, 134, 255, 0.16); /* tinted chip / selected bg */
+  --accent-contrast: #0a0a0c;        /* text drawn on an --accent fill */
+
+  /* — status — */
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --info: #60a5fa;
+
+  /* — focus — */
+  --ring: var(--accent);
+
+  /* — overlay — */
+  --scrim: rgba(0, 0, 0, 0.72);
+
+  /* — elevation — */
+  --shadow-card: none;
+  --shadow-overlay: 0 16px 40px rgba(0, 0, 0, 0.55);
 
   /* — typography — */
   --font-sans: "Geist", system-ui, -apple-system, sans-serif;
@@ -49,6 +100,53 @@
   --dur-med: 400ms;
 }
 
+/* ---------------------------------------------------------------------------
+   Light theme. Only colour and elevation tokens change; type, layout, radius
+   and motion are inherited from the dark block.
+   --------------------------------------------------------------------------- */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f9fafb;
+  --surface-sunken: #f3f4f6;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-hover: rgba(0, 0, 0, 0.03);
+
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.16);
+  --border-strong: rgba(0, 0, 0, 0.24);
+
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #667085;
+  --text-disabled: #9ca3af;
+
+  --inverse-bg: #111827;
+  --inverse-fg: #ffffff;
+
+  --accent: #3d5bff;
+  --accent-hover: #2f52d9;           /* darkens on light */
+  --accent-subtle: rgba(61, 91, 255, 0.1);
+  --accent-contrast: #ffffff;
+
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #b91c1c;
+  --info: #1d4ed8;
+
+  --ring: var(--accent);
+  --scrim: rgba(15, 23, 42, 0.32);
+
+  --shadow-card:
+    0 1px 2px rgba(16, 24, 40, 0.05),
+    0 1px 3px rgba(16, 24, 40, 0.06);
+  --shadow-overlay:
+    0 4px 8px -2px rgba(16, 24, 40, 0.08),
+    0 16px 40px -4px rgba(16, 24, 40, 0.14);
+}
+
 *,
 *::before,
 *::after {
@@ -58,17 +156,19 @@
 }
 
 html {
-  background: var(--ink);
+  background: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
 }
 
 body {
-  background: var(--ink);
+  background: var(--bg);
   min-height: 100dvh;
 }
 
@@ -84,7 +184,7 @@ img {
 
 ::selection {
   background: var(--accent);
-  color: var(--ink);
+  color: var(--accent-contrast);
 }
 
 /* — grid container — */
@@ -139,9 +239,53 @@ img {
   border-color: var(--border-subtle);
 }
 
+/* — buttons — declared once; never re-declare inside a component — */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 20px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.btn--primary {
+  background: var(--inverse-bg);
+  color: var(--inverse-fg);
+  border-color: var(--inverse-bg);
+}
+.btn--primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+.btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.btn--secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 /* — focus — */
 :focus-visible {
-  outline: 1px solid var(--accent);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
@@ -153,16 +297,4 @@ img {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* — scrollbar — */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-}
-::-webkit-scrollbar-track {
-  background: var(--ink);
 }

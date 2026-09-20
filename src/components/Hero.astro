@@ -78,22 +78,6 @@
     mask-image: radial-gradient(ellipse 70% 50% at 80% 20%, black 40%, transparent 75%);
   }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    height: 48px;
-    padding: 0 20px;
-    border-radius: var(--radius-pill);
-    font-size: 14px;
-    font-weight: 500;
-    transition: all var(--dur-fast) var(--ease-out);
-    border: 1px solid transparent;
-  }
-  .btn--primary { background: var(--text-primary); color: var(--ink); }
-  .btn--primary:hover { background: var(--accent); border-color: var(--accent); }
-  .btn--secondary { border-color: #383838; color: var(--text-primary); }
-  .btn--secondary:hover { border-color: var(--accent); color: var(--accent); }
-
   @media (max-width: 700px) {
     .hero__bottom { grid-template-columns: 1fr; }
   }

@@ -39,17 +39,18 @@ const { index, category, title, description, stack, href = "#", image } = Astro.
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
     overflow: clip;
     transition: border-color var(--dur-med) var(--ease-out);
   }
-  .p-card:hover { border-color: #444; }
+  .p-card:hover { border-color: var(--border-hover); }
   .p-card:hover .p-card__media img,
   .p-card:hover .p-card__placeholder { transform: scale(1.02); }
 
   .p-card__media {
     aspect-ratio: 16 / 10;
     overflow: clip;
-    background: var(--surface-2);
+    background: var(--surface-sunken);
     border-bottom: 1px solid var(--border);
   }
   .p-card__media img {
@@ -69,7 +70,7 @@ const { index, category, title, description, stack, href = "#", image } = Astro.
     transition: transform var(--dur-med) var(--ease-out);
     background:
       radial-gradient(ellipse at 30% 20%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 60%),
-      var(--surface-2);
+      var(--surface-sunken);
   }
   .p-card__ph-title {
     font-size: 20px;

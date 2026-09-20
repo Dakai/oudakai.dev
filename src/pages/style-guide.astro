@@ -4,6 +4,70 @@ import ProjectCard from "../components/ProjectCard.astro";
 import BlogRow from "../components/BlogRow.astro";
 import ToolCard from "../components/ToolCard.astro";
 import SectionHeading from "../components/SectionHeading.astro";
+
+// Every swatch below reads its value straight out of the token sheet, so this
+// page cannot drift from src/styles/global.css.
+const themes = [
+  { id: "dark", note: "default — no attribute needed" },
+  { id: "light", note: '<html data-theme="light">' },
+];
+
+const groups = [
+  {
+    label: "SURFACES",
+    hint: "elevation ladder",
+    items: [
+      { token: "--bg", role: "canvas" },
+      { token: "--surface-sunken", role: "inset well" },
+      { token: "--surface", role: "card" },
+      { token: "--surface-raised", role: "overlay" },
+    ],
+    kind: "fill",
+  },
+  {
+    label: "TEXT",
+    hint: "4.5:1 on every surface above",
+    items: [
+      { token: "--text-primary", role: "headings, body" },
+      { token: "--text-secondary", role: "supporting copy" },
+      { token: "--text-muted", role: "metadata, dates" },
+      { token: "--text-disabled", role: "disabled only" },
+    ],
+    kind: "text",
+  },
+  {
+    label: "BORDERS",
+    hint: "1px alpha hairlines",
+    items: [
+      { token: "--border-subtle", role: "separator" },
+      { token: "--border", role: "container edge" },
+      { token: "--border-hover", role: "hovered edge" },
+      { token: "--border-strong", role: "outline button" },
+    ],
+    kind: "border",
+  },
+  {
+    label: "ACCENT",
+    hint: "brand presence",
+    items: [
+      { token: "--accent", role: "identity, links" },
+      { token: "--accent-hover", role: "hovered label" },
+      { token: "--accent-subtle", role: "tinted fill" },
+    ],
+    kind: "fill",
+  },
+  {
+    label: "STATUS",
+    hint: "never brand-coloured",
+    items: [
+      { token: "--success", role: "available, ok" },
+      { token: "--warning", role: "caution" },
+      { token: "--danger", role: "error, destructive" },
+      { token: "--info", role: "informational" },
+    ],
+    kind: "text",
+  },
+];
 ---
 
 <BaseLayout title="Style Guide — DAKAI">
@@ -18,18 +82,63 @@ import SectionHeading from "../components/SectionHeading.astro";
   <!-- colors -->
   <section class="section section--tight">
     <div class="container">
-      <SectionHeading index="01" label="COLOR" title="Ink first. Signal sparingly." />
-      <div class="swatches">
-        <div class="sw"><i style="background:#080808;border:1px solid #252525"></i><span class="mono-label">INK — #080808</span></div>
-        <div class="sw"><i style="background:#111111"></i><span class="mono-label">SURFACE — #111111</span></div>
-        <div class="sw"><i style="background:#181818"></i><span class="mono-label">SURFACE-2 — #181818</span></div>
-        <div class="sw"><i style="background:#252525"></i><span class="mono-label">BORDER — #252525</span></div>
-        <div class="sw"><i style="background:#1B1B1B"></i><span class="mono-label">BORDER-SUBTLE — #1B1B1B</span></div>
-        <div class="sw"><i style="background:#4F7CFF"></i><span class="mono-label" style="color:#fff">SIGNAL — #4F7CFF</span></div>
-        <div class="sw"><i style="background:#F2F2F0"></i><span class="mono-label" style="color:var(--ink)">TEXT-PRIMARY — #F2F2F0</span></div>
-        <div class="sw"><i style="background:#A0A09B"></i><span class="mono-label">TEXT-SECONDARY — #A0A09B</span></div>
+      <SectionHeading
+        index="01"
+        label="COLOR"
+        title="Roles, not hex."
+        subtitle="Components reference tokens only — a hex literal inside a component is a bug. Dark is the default identity; light is opt-in."
+      />
+
+      <div class="themes">
+        {
+          themes.map((theme) => (
+            <div class="theme" data-theme={theme.id}>
+              <div class="theme__head">
+                <span class="mono-label">{theme.id.toUpperCase()}</span>
+                <span class="mono-label theme__hint">{theme.note}</span>
+              </div>
+
+              {groups.map((group) => (
+                <div class="group">
+                  <div class="group__head">
+                    <span class="mono-label">{group.label}</span>
+                    <span class="group__hint">{group.hint}</span>
+                  </div>
+                  <div class="group__rows">
+                    {group.items.map((item) => (
+                      <div class="sw">
+                        {group.kind === "fill" && (
+                          <i class="sw__chip" style={`background:var(${item.token})`} />
+                        )}
+                        {group.kind === "border" && (
+                          <i
+                            class="sw__chip"
+                            style={`background:var(--surface);border-color:var(${item.token})`}
+                          />
+                        )}
+                        {group.kind === "text" && (
+                          <i
+                            class="sw__chip sw__chip--glyph"
+                            style={`background:var(--surface);color:var(${item.token})`}
+                          >
+                            Aa
+                          </i>
+                        )}
+                        <span class="sw__meta">
+                          <span class="mono-label">{item.token}</span>
+                          <span class="sw__role">{item.role}</span>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))
+        }
       </div>
-      <p class="mono-label" style="margin-top:16px;color:var(--text-muted)">Ratio — Black 82% · White/Grey 15% · Accent 3%</p>
+
+      <p class="mono-label" style="margin-top:24px;color:var(--text-muted)">Ratio — Surfaces 82% · Text 15% · Accent 3%. Elevation is surface + border in dark, surface + shadow in light. Text clears 4.5:1 on every surface in the ladder; --text-disabled is the one exemption.</p>
     </div>
   </section>
 
@@ -66,9 +175,9 @@ import SectionHeading from "../components/SectionHeading.astro";
       <div style="display:flex;gap:12px;flex-wrap:wrap">
         <a href="#" class="btn btn--primary">Discuss a project →</a>
         <a href="#" class="btn btn--secondary">Read blog</a>
-        <a href="#" class="btn btn--secondary" style="opacity:.5;pointer-events:none">Disabled</a>
+        <a href="#" class="btn btn--secondary" aria-disabled="true">Disabled</a>
       </div>
-      <p class="mono-label" style="margin-top:12px;color:var(--text-muted)">Primary: #F2F2F0 → hover #4F7CFF · Secondary: transparent / #383838 → hover #4F7CFF · Height 48px · Radius 999px</p>
+      <p class="mono-label" style="margin-top:12px;color:var(--text-muted)">Declared once in global.css — never re-declare .btn in a component. Primary: fill --inverse-bg → hover --accent. Secondary: transparent / --border-strong → hover --accent-hover. Height 48px · Radius 999px</p>
     </div>
   </section>
 
@@ -89,7 +198,7 @@ import SectionHeading from "../components/SectionHeading.astro";
   <!-- cards -->
   <section class="section section--tight">
     <div class="container">
-      <SectionHeading index="05" label="CARDS" title="Surface #111 · Border #252525 · Hover #444" subtitle="No shadow, no gradient, no glass. Image 16/10, scale 1.02 on hover, 250–400ms ease-out." />
+      <SectionHeading index="05" label="CARDS" title="--surface · --border · hover --border-hover" subtitle="No gradient, no glass. Image bed is --surface-sunken. Elevation is the shadow token — free in dark, real in light." />
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="sg-cards">
         <ProjectCard index="01" category="CLIENT WORK" title="A better way to move goods" description="E-commerce & brand site for a modern logistics group." stack={["ASTRO","SVELTE","TYPESCRIPT"]} href="#" />
         <ProjectCard index="02" category="CLIENT WORK" title="Second project name" description="Short description of the project." stack={["ASTRO","TYPESCRIPT"]} href="#" />
@@ -103,7 +212,7 @@ import SectionHeading from "../components/SectionHeading.astro";
   <!-- blog rows -->
   <section class="section section--tight">
     <div class="container">
-      <SectionHeading index="06" label="BLOG ROWS" title="Editorial list, not cards." subtitle="Border-top hairline · Mono date + category · 17px title. Hover: title → accent." />
+      <SectionHeading index="06" label="BLOG ROWS" title="Editorial list, not cards." subtitle="Border-top hairline · Mono date + category · 17px title. Hover: --surface-hover wash, title → --accent-hover." />
       <div>
         <BlogRow date="09.10.26" category="WEB DEVELOPMENT" title="Why I moved my personal website from WordPress to Astro" readingTime="8 min" href="#" />
         <BlogRow date="08.28.26" category="DESIGN SYSTEM" title="Second article title" readingTime="6 min" href="#" />
@@ -131,9 +240,9 @@ import SectionHeading from "../components/SectionHeading.astro";
   <!-- experimental -->
   <section class="section section--tight">
     <div class="container">
-      <SectionHeading index="08" label="EXPERIMENTAL" title="≤ 5–10% of the page." subtitle="Grid dots · coordinates · system labels · tiny ● indicator in #4F7CFF. Opacity low, never dominant." />
+      <SectionHeading index="08" label="EXPERIMENTAL" title="≤ 5–10% of the page." subtitle="Grid dots · coordinates · system labels · tiny ● indicator in --accent. Opacity low, never dominant." />
       <div style="display:flex;gap:24px;flex-wrap:wrap" class="mono-label">
-        <span>SYSTEM / 001</span><span>BUILD / 2026</span><span>STATUS / ACTIVE</span><span style="color:var(--accent)">● ONLINE</span>
+        <span>SYSTEM / 001</span><span>BUILD / 2026</span><span>STATUS / ACTIVE</span><span style="color:var(--success)">● ONLINE</span>
       </div>
       <div style="margin-top:16px;height:80px;border:1px solid var(--border);background:radial-gradient(circle, var(--text-primary) 1px, transparent 1px);background-size:20px 20px;opacity:.06"></div>
     </div>
@@ -141,24 +250,47 @@ import SectionHeading from "../components/SectionHeading.astro";
 
   <hr class="hr" />
   <div class="container" style="padding-block:24px">
-    <p class="mono-label" style="color:var(--text-muted)">V1 — Dark only · No light mode yet · Spacing 4px base (4 8 12 16 24 32 48 64 80 96 128 160 192) · Motion 200–700ms ease-out · Radius sharp (cards 0–4px, buttons 999px)</p>
+    <p class="mono-label" style="color:var(--text-muted)">V2 — Dark first, light opt-in via &lt;html data-theme="light"&gt; · Spacing 4px base (4 8 12 16 24 32 48 64 80 96 128 160 192) · Motion 200–700ms ease-out · Radius sharp (cards 0–4px, buttons 999px)</p>
   </div>
 </BaseLayout>
 
 <style>
-  .swatches { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:8px; }
+  .themes { display:grid; gap:16px; margin-top:8px; }
+  .theme {
+    background:var(--bg);
+    color:var(--text-primary);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow-card);
+    padding:24px;
+    display:grid;
+    gap:20px;
+  }
+  .theme__head {
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    border-bottom:1px solid var(--border-subtle); padding-bottom:12px;
+  }
+  .theme__hint { color:var(--text-muted); text-transform:none; }
+
+  .group { display:grid; gap:10px; }
+  .group__head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .group__hint { font-size:12px; color:var(--text-muted); }
+  .group__rows { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+
   .sw { display:grid; gap:8px; }
-  .sw i { display:block; height:64px; border-radius:2px; }
+  .sw__chip {
+    display:block; height:56px; border:1px solid var(--border);
+  }
+  .sw__chip--glyph {
+    display:grid; place-items:center; font-size:18px; font-weight:500;
+  }
+  .sw__meta { display:grid; gap:2px; }
+  .sw__role { font-size:12px; line-height:1.3; color:var(--text-muted); }
+
   .type-samples { display:grid; gap:28px; margin-top:8px; }
   .type-row { display:grid; gap:6px; padding-bottom:20px; border-bottom:1px solid var(--border-subtle); }
   .type-row:last-child { border:0; }
-  .btn { display:inline-flex;align-items:center;height:48px;padding:0 20px;border-radius:999px;font-size:14px;font-weight:500;border:1px solid transparent;transition:all 200ms cubic-bezier(.16,1,.3,1); }
-  .btn--primary { background:var(--text-primary); color:var(--ink); }
-  .btn--primary:hover { background:var(--accent); border-color:var(--accent); }
-  .btn--secondary { background:transparent; color:var(--text-primary); border-color:#383838; }
-  .btn--secondary:hover { border-color:var(--accent); color:var(--accent); }
   @media (max-width: 700px) {
-    .swatches { grid-template-columns:repeat(2,1fr); }
+    .group__rows { grid-template-columns:repeat(2,1fr); }
     .sg-cards, .sg-tools { grid-template-columns:1fr !important; }
   }
 </style>

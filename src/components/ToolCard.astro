@@ -28,10 +28,11 @@ const { index, name, description, href = "#", status = "READY" } = Astro.props;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
     transition: border-color var(--dur-fast) var(--ease-out);
   }
-  .t-card:hover { border-color: #444; }
-  .t-card:hover .t-card__cta { color: var(--accent); }
+  .t-card:hover { border-color: var(--border-hover); }
+  .t-card:hover .t-card__cta { color: var(--accent-hover); }
 
   .t-card__head {
     display: flex;

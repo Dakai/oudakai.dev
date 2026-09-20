@@ -126,7 +126,7 @@ const pathname = Astro.url.pathname;
         top: 0;
         z-index: 50;
         height: var(--nav-h);
-        background: color-mix(in srgb, var(--ink) 92%, transparent);
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
         backdrop-filter: blur(12px);
         border-bottom: 1px solid var(--border-subtle);
       }
@@ -208,7 +208,8 @@ const pathname = Astro.url.pathname;
       .nav__drawer {
         position: absolute;
         inset: var(--nav-h) 0 auto 0;
-        background: var(--ink);
+        background: var(--surface-raised);
+        box-shadow: var(--shadow-overlay);
         border-bottom: 1px solid var(--border);
         padding: 24px 20px 32px;
         display: flex;
@@ -254,36 +255,6 @@ const pathname = Astro.url.pathname;
       }
       .footer__grid ul a:hover { color: var(--accent); }
       .footer__meta { text-align: right; }
-
-      /* buttons — shared so footer CTA works without component */
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        height: 48px;
-        padding: 0 20px;
-        border-radius: var(--radius-pill);
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: -0.01em;
-        white-space: nowrap;
-        transition: all var(--dur-fast) var(--ease-out);
-        cursor: pointer;
-        border: 1px solid transparent;
-        text-decoration: none;
-      }
-      .btn--primary {
-        background: var(--text-primary);
-        color: var(--ink);
-        border-color: var(--text-primary);
-      }
-      .btn--primary:hover { background: var(--accent); border-color: var(--accent); }
-      .btn--secondary {
-        background: transparent;
-        color: var(--text-primary);
-        border-color: #383838;
-      }
-      .btn--secondary:hover { border-color: var(--accent); color: var(--accent); }
 
       @media (max-width: 900px) {
         .nav__links, .nav__meta { display: none; }

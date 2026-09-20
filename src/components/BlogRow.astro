@@ -27,8 +27,8 @@ const { date, category, title, readingTime, href = "#" } = Astro.props;
     transition: background var(--dur-fast) var(--ease-out);
   }
   .b-row:last-child { border-bottom: 1px solid var(--border); }
-  .b-row:hover { background: color-mix(in srgb, var(--surface) 60%, transparent); }
-  .b-row:hover .b-row__title { color: var(--accent); }
+  .b-row:hover { background: var(--surface-hover); }
+  .b-row:hover .b-row__title { color: var(--accent-hover); }
 
   .b-row__date { color: var(--text-muted); font-size: 12px; }
   .b-row__cat { color: var(--text-secondary); font-size: 11px; }

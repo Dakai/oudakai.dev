@@ -44,63 +44,86 @@
 ## Core Palette
 
 ```text
-INK
-#080808
+BG (--bg)
+#0A0A0C
 ```
 
-主背景。
+主背景 / canvas。
 
 ```text
-SURFACE
-#111111
+SURFACE (--surface)
+#18181B
 ```
 
-Card、hover、secondary surface。
+Card。
 
 ```text
-SURFACE-2
-#181818
+SURFACE-SUNKEN (--surface-sunken)
+#101012
 ```
 
-Interactive surface。
+内嵌凹槽：图片底、code block、input。
 
 ```text
-BORDER
-#252525
+SURFACE-RAISED (--surface-raised)
+#232326
 ```
 
-默认 border。
+浮层：drawer、menu、popover、modal。
 
 ```text
-BORDER-SUBTLE
-#1B1B1B
+BORDER (--border)
+rgba(255,255,255,0.08)
+```
+
+默认 border。1px 半透明发丝线，**不要**写成实色 hex。
+
+```text
+BORDER-SUBTLE (--border-subtle)
+rgba(255,255,255,0.05)
 ```
 
 非常弱的分割线。
+
+```text
+BORDER-HOVER (--border-hover)
+rgba(255,255,255,0.16)
+```
+
+可交互边缘的 hover 态。
+
+```text
+BORDER-STRONG (--border-strong)
+rgba(255,255,255,0.24)
+```
+
+描边按钮、滚动条。
 
 ---
 
 ### Text
 
 ```text
-TEXT-PRIMARY
-#F2F2F0
+TEXT-PRIMARY (--text-primary)
+#F4F4F5
 ```
 
 ```text
-TEXT-SECONDARY
-#A0A09B
+TEXT-SECONDARY (--text-secondary)
+#A1A1AA
 ```
 
 ```text
-TEXT-MUTED
-#666661
+TEXT-MUTED (--text-muted)
+#8B8B94
 ```
 
 ```text
-TEXT-DISABLED
-#454542
+TEXT-DISABLED (--text-disabled)
+#52525B
 ```
+
+四个层级在上面每一个表面上都满足 4.5:1 —— 只有 `--text-disabled` 例外（WCAG 1.4.3 豁免）。
 
 ---
 
@@ -109,11 +132,13 @@ TEXT-DISABLED
 我建议第一版使用：
 
 ```text
-SIGNAL GREEN
-#B7FF5A
+SIGNAL BLUE
+#5B86FF
 ```
 
-它不是传统的 neon green，而是比较偏 **acid / signal green**。
+它不是传统的深蓝，而是偏 **electric / signal blue** 的亮蓝。
+
+对应 token `--accent`（暗色主题）。亮色主题使用 `#3D5BFF`。
 
 用途：
 
@@ -139,6 +164,8 @@ Accent             3%
 ```
 
 Accent 越少，越有价值。
+
+以上是暗色主题。完整的 token 表（含亮色主题、状态色、焦点环、阴影）以 `src/styles/global.css` 和 `/style-guide` 为准 —— 本节与那张表不一致时，以那张表为准。
 
 ---
 
@@ -285,7 +312,7 @@ letter-spacing: 0.02em
 Geist Mono
 12px
 uppercase
-#A0A09B
+#A1A1AA
 ```
 
 然后：
@@ -300,7 +327,7 @@ TO MOVE GOODS.
 ```text
 Geist
 56–72px
-#F2F2F0
+#F4F4F5
 ```
 
 然后：
@@ -313,7 +340,7 @@ Web design · Development · E-commerce
 
 ```text
 16px
-#A0A09B
+#A1A1AA
 ```
 
 这种 **3-level hierarchy** 是整个网站最重要的视觉语言之一。
@@ -424,19 +451,19 @@ Card：
 默认：
 
 ```css
-border: 1px solid #252525;
+border: 1px solid rgba(255,255,255,0.08);
 ```
 
 Hover：
 
 ```css
-border-color: #444;
+border-color: rgba(255,255,255,0.16);
 ```
 
 Accent：
 
 ```css
-border-color: #B7FF5A;
+border-color: #5B86FF;
 ```
 
 不建议大量使用圆角。
@@ -513,7 +540,7 @@ Projects
 Accent dot 可以是：
 
 ```text
-#B7FF5A
+#5B86FF
 ```
 
 ---
@@ -537,8 +564,8 @@ START A PROJECT
 ### Primary Button
 
 ```text
-Background: #F2F2F0
-Text: #080808
+Background: #F4F4F5
+Text: #0A0A0C
 Height: 48px
 Padding: 0 20px
 Radius: 999px
@@ -547,8 +574,11 @@ Radius: 999px
 Hover：
 
 ```text
-Background: #B7FF5A
+Background: #5B86FF
+Text: #0A0A0C
 ```
+
+不要在蓝色上写白字：`#FFFFFF` on `#5B86FF` 只有 3.33:1，正文不合格。蓝色上的文字用 `--accent-contrast`。
 
 ---
 
@@ -556,25 +586,24 @@ Background: #B7FF5A
 
 ```text
 Background: transparent
-Border: #383838
-Text: #F2F2F0
+Border: rgba(255,255,255,0.24)
+Text: #F4F4F5
 ```
 
 Hover：
 
 ```text
-Border: #B7FF5A
-Text: #B7FF5A
+Border: #5B86FF
+Text: #5B86FF
 ```
 
 ---
 
 # 12 — Cards
 
-Card 不要有明显的：
+Card 不要有：
 
 ```text
-shadow
 gradient
 glass effect
 ```
@@ -582,14 +611,17 @@ glass effect
 使用：
 
 ```text
-background: #111111
-border: 1px solid #252525
+background: #18181B                      (--surface)
+border: 1px solid rgba(255,255,255,0.08) (--border)
+box-shadow: var(--shadow-card)
 ```
+
+`--shadow-card` 在暗色下是 `none` —— 暗色的浮起完全由 surface 加 1px 发丝线承担，加阴影只会糊成一团。亮色下它是真实的两层低透明度阴影：白卡片压在冷灰底上，只靠边框立不住。**两种模式各用各的浮起手段，不要统一。**
 
 Hover：
 
 ```text
-border → #444
+border → rgba(255,255,255,0.16)
 image scale → 1.02
 ```
 
@@ -768,7 +800,7 @@ STATUS / ACTIVE
 颜色：
 
 ```text
-#B7FF5A
+#5B86FF
 ```
 
 但这些元素**不能超过页面视觉的 5–10%**。
